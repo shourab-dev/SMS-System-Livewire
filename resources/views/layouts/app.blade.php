@@ -200,10 +200,9 @@
                         </li>
                         @can('role permission')
                         <li class="submenu {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
-                            <a href="#" ><i
-                                    class="fas fa-shield-alt"></i> <span> User Role Manegement </span> <span
+                            <a href="#"><i class="fas fa-shield-alt"></i> <span> User Role Manegement </span> <span
                                     class="menu-arrow"></span></a>
-                            <ul >
+                            <ul>
                                 <li><a href="{{ route('admin.role.permission') }}">Roles & Permission</a></li>
 
                             </ul>
@@ -257,6 +256,7 @@
     <script src="{{ asset('backend/assets/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
     <script src="{{ asset('backend/assets/js/script.js') }}"></script>
+    @stack('customJs')
 </body>
 
 </html>

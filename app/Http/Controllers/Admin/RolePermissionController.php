@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 class RolePermissionController extends Controller
@@ -17,6 +18,7 @@ class RolePermissionController extends Controller
         $principleRoles = Role::where('guard_name', 'principal')->toBase()->get();
         $roles = Role::where('name', '!=', 'super-admin')->get();
         $roles = collect($roles)->groupBy('guard_name');
+
         // dd($roles);
         return view('admin.permission.rolePermission', compact('roles'));
     }

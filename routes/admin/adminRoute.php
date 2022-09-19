@@ -33,7 +33,10 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
 
 
     //*Role & Permission
-    Route::get('/role-permission', [RolePermissionController::class, 'render'])->name('role.permission')->middleware('role:super-admin');
-    Route::get('/role-permission/edit/{id}', [RolePermissionController::class, 'edit'])->name('role.permission.edit');
-    Route::PUT('/role-permission/update/{id}', [RolePermissionController::class, 'update'])->name('role.permission.update');
+    Route::middleware('role:super-admin')->group(function () {
+
+        Route::get('/role-permission', [RolePermissionController::class, 'render'])->name('role.permission');
+        Route::get('/role-permission/edit/{id}', [RolePermissionController::class, 'edit'])->name('role.permission.edit');
+        Route::PUT('/role-permission/update/{id}', [RolePermissionController::class, 'update'])->name('role.permission.update');
+    });
 });
