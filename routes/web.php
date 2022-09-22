@@ -19,6 +19,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+
+
+
+
 //*STUDENT LOGIN ROUTE
 Route::POST('/student-login', [LoginController::class, 'studentLogin'])->name('student.login');
 Route::name('student.')->middleware('isStudent')->group(function () {

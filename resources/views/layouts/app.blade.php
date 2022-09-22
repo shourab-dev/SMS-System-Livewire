@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/all.min.css') }}">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Scripts -->
 </head>
 
@@ -159,15 +159,16 @@
                                     class="avatar-img rounded-circle">
                             </div>
                             <div class="user-text">
-                                <h6>{{ auth()->user()->name }}</h6>
-                                <p class="text-muted mb-0">Administrator</p>
+                                <h6>{{ str(auth()->user()->name)->headline() }}</h6>
+                                <p class="text-muted mb-0">{{ str(auth()->user()->getRoleNames()->first())->headline()
+                                    }}</p>
                             </div>
                         </div>
                         <x-jet-dropdown-link href="{{ route('profile.show') }}" class="dropdown-item">
                             {{ __('My Profile') }}
                         </x-jet-dropdown-link>
 
-                        {{-- <a class="dropdown-item" href="inbox.html">Inbox</a> --}}
+                        <a class="dropdown-item" href="{{ route('admin.my.info') }}">Personal Info</a>
                         {{-- <a class="dropdown-item" href="login.html">Logout</a> --}}
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('admin.logout') }}">
@@ -187,7 +188,7 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="menu-title">
-                            <span>Main Menu</span>
+                            <span>Main Menu </span>
                         </li>
 
                         <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -198,16 +199,29 @@
                         <li class="menu-title ">
                             <span>Pages</span>
                         </li>
-                        @can('role permission')
+                        @if (auth('web')->user()->can('role permission'))
                         <li class="submenu {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
                             <a href="#"><i class="fas fa-shield-alt"></i> <span> User Role Manegement </span> <span
                                     class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{ route('admin.role.permission') }}">Roles & Permission</a></li>
+                                <li><a href="{{ route('admin.role.permission') }}">Add Director/Chairmen</a></li>
 
                             </ul>
                         </li>
-                        @endcan
+                        @endif
+                        @if (auth('web')->user()->can('branch manage'))
+                        <li class=" {{ request()->routeIs('admin.branch*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.branch.index') }}">
+                                <i class="fas fa-shield-alt"></i>
+                                <span> Branch Manegement </span>
+                            </a>
+
+                        </li>
+                        @endif
+
+
+
 
 
 

@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->boolean('status')->default(true);
+            $table->unsignedBigInteger('avatar_id');
+            $table->string('address');
+            $table->string('permanent_address');
+            $table->string('phone');
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+            $table->string('cv');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('user_infos');
     }
 };

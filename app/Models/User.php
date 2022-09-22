@@ -60,4 +60,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    /**
+     * *USER INFO RELATIONSHIP
+     */
+    public function userInfo()
+    {
+        return $this->hasOne(UserInfo::class, 'avatar_id');
+    }
 }

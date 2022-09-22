@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -14,18 +15,20 @@ class RolePermissionController extends Controller
     {
         //*Render ALl Roles and Permissions
 
-        $adminRoles = Role::where('name', '!=', 'super-admin')->where('guard_name', 'web')->toBase()->get();
-        $principleRoles = Role::where('guard_name', 'principal')->toBase()->get();
-        $roles = Role::where('name', '!=', 'super-admin')->get();
-        $roles = collect($roles)->groupBy('guard_name');
+        if (Auth::user()->hasRole('super-admin')) {
 
-        // dd($roles);
+            $roles = Role::where('name', '!=', 'super-admin')->get();
+        } else {
+            $roles = Role::where('guard_name', '!=', 'web')->get();
+        }
+        $roles = collect($roles)->groupBy('guard_name');
         return view('admin.permission.rolePermission', compact('roles'));
     }
 
     public function edit($id)
     {
         //*EDIT SPECIFIC ROLE AND PERMISSION
+
         $role = Role::with(['permissions' => function ($q) {
             $q->select('id');
         }])->findOrFail($id);

@@ -66,6 +66,7 @@ class RolePermissionSeeder extends Seeder
         //*PERMISSION FOR DIRECTOR
         $directorsPermissions = [
             ['role permission', 'Edit Role & Assign Permission'],
+            ['branch manage', 'Manage Multiple Branches'],
             ['register user', 'Can register a user'],
             ['ban user', 'Can ban a user'],
         ];

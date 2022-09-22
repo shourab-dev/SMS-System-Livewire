@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\RolePermissionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,12 +32,21 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    //*USER INFO
+    Route::view('/my-info', 'admin.personalInfo')->name('my.info');
+
 
     //*Role & Permission
-    Route::middleware('role:super-admin')->group(function () {
+    Route::middleware('role_or_permission:super-admin|role permission')->group(function () {
 
         Route::get('/role-permission', [RolePermissionController::class, 'render'])->name('role.permission');
         Route::get('/role-permission/edit/{id}', [RolePermissionController::class, 'edit'])->name('role.permission.edit');
         Route::PUT('/role-permission/update/{id}', [RolePermissionController::class, 'update'])->name('role.permission.update');
+    });
+
+
+    //*BRANCH MANAGEMENT
+    Route::middleware('role_or_permission:super-admin|branch manage')->prefix('/branch')->name('branch.')->group(function () {
+        Route::get('/all', [BranchController::class, 'index'])->name('index');
     });
 });
