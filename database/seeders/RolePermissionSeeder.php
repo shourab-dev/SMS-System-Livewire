@@ -82,5 +82,24 @@ class RolePermissionSeeder extends Seeder
         }
 
         //*PERMISSION FOR DIRECTOR ENDS
+        //*PERMISSION FOR DIRECTOR
+        $directorsPermissions = [
+            ['role permission', 'Edit Role & Assign Permission'],
+            ['principle manage', 'Manage Multiple Branches'],
+            ['register user', 'Can register a user'],
+            ['ban user', 'Can ban a user'],
+        ];
+        foreach ($directorsPermissions as $drPermission) {
+            Permission::create(
+                [
+                    'name' => $drPermission[0],
+                    'guard_name' => 'principal',
+                    'section_id' => 1,
+                    'detail' => $drPermission[1]
+                ]
+            );
+        }
+
+        //*PERMISSION FOR DIRECTOR ENDS
     }
 }

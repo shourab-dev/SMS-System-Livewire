@@ -30,7 +30,7 @@ class RolePermissionAssignSeeder extends Seeder
         ]);
 
         //*Assigning All PERMISSION TO SUPER-ADMIN ROLE
-        $permissions = Permission::get();
+        $permissions = Permission::where('guard_name', 'web')->get();
         $superAdmin = Role::where('name', 'super-admin')->first();
         $superAdmin->syncPermissions($permissions);
         //*Assigning All PERMISSION TO SUPER-ADMIN ROLE ENDS
